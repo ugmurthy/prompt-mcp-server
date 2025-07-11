@@ -1,6 +1,7 @@
 ## Custom ignore
 IMPLEMENTATION_PLAN.md
 SPEC.md 
+index.html
 
 # Dependencies
 node_modules/

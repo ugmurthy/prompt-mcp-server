@@ -1,4 +1,10 @@
+
 # PromptDB MCP Server
+
+
+<p align="center">
+  <img src="_assets/banner.gif" alt="banner" width="900" height="250">
+</p>
 
 A Model Context Protocol (MCP) server that provides prompt storage and retrieval functionality. Store, version, and manage your prompts with rich metadata and caching for optimal performance.
 
