@@ -2,6 +2,9 @@
   "name": "promptdb-mcp-server",
   "version": "0.0.2",
   "type": "module",
+  "private": false,
+	"description": "A simple MCP Server to manage prompts based on tasknames",
+	"homepage": "https://github.com/ugmurthy/prompt-mcp-server",
   "main": "dist/index.js",
   "bin": {
     "promptdb-mcp-server": "dist/index.js"
@@ -13,10 +16,12 @@
     "start:stdio": "node dist/index.js --transport stdio",
     "start:sse": "node dist/index.js --transport sse --port 3000",
     "dev:sse": "npm run build && npm run start:sse",
-    "clean": "rm -rf dist",
-    "test": "./run-tests.sh",
-    "test:tools": "node test-promptdb-tools.js"
+    "clean": "rm -rf dist"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+
   "dependencies": {
     "@modelcontextprotocol/sdk": "latest",
     "zod": "^3.22.0",
