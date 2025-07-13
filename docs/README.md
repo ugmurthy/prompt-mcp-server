@@ -18,6 +18,15 @@ A Model Context Protocol (MCP) server that provides prompt storage and retrieval
 - **Dual Transport Support**: Both stdio and SSE (Server-Sent Events) transports
 - **Cloud Deployment**: Ready for deployment to Vercel, Netlify, and other cloud platforms
 
+## Pre-populated Prompts
+
+The server comes with a set of pre-populated prompts ready for immediate use. You can retrieve them using the `getPrompt` tool with the following task names:
+
+- `assistant`
+- `code-review`
+- `documentation`
+- `summarise-paper`
+- `to-flash-cards`
 ## Installation
 
 ### Global Installation

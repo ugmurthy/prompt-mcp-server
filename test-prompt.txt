@@ -1,5 +1,1 @@
-This is a test prompt for the promptdb MCP client.
-
-It demonstrates how to store and retrieve prompts using the command-line interface.
-
-You can use this prompt as a template for creating your own prompts.
+This is a test prompt.
