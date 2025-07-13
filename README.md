@@ -15,6 +15,8 @@ A Model Context Protocol (MCP) server that provides prompt storage and retrieval
 - **Caching**: In-memory LRU cache for performance optimization
 - **Rich Metadata**: Tags, descriptions, timestamps, and version tracking
 - **MCP Integration**: Full compatibility with MCP-enabled applications
+- **Dual Transport Support**: Both stdio and SSE (Server-Sent Events) transports
+- **Cloud Deployment**: Ready for deployment to Vercel, Netlify, and other cloud platforms
 
 ## Installation
 
@@ -41,8 +43,36 @@ pnpm build
 pnpm start
 ```
 
+## Transport Options
+
+The PromptDB MCP Server supports two transport methods:
+
+### 1. Stdio Transport (Default)
+For local development and MCP clients that support process communication:
+
+```bash
+# Default stdio transport
+promptdb-mcp-server
+# or explicitly
+promptdb-mcp-server --transport stdio
+```
+
+### 2. SSE Transport (Server-Sent Events)
+For web applications and cloud deployment:
+
+```bash
+# SSE transport on port 3000
+promptdb-mcp-server --transport sse --port 3000
+
+# Using environment variables
+export TRANSPORT_TYPE=sse
+export PORT=3000
+promptdb-mcp-server
+```
+
 ## MCP Configuration
 
+### Stdio Transport Configuration
 Add to your MCP client configuration:
 
 ```json
@@ -55,6 +85,48 @@ Add to your MCP client configuration:
   }
 }
 ```
+
+### SSE Transport Configuration
+For MCP clients that support HTTP/SSE transport:
+
+```json
+{
+  "mcpServers": {
+    "promptdb": {
+      "transport": "sse",
+      "url": "http://localhost:3000/sse"
+    }
+  }
+}
+```
+
+## Cloud Deployment
+
+### Vercel Deployment
+```bash
+# Build and deploy
+pnpm build
+vercel deploy
+
+# Set environment variables in Vercel dashboard:
+# TRANSPORT_TYPE=sse
+# PORT=3000
+```
+
+### Netlify Deployment
+```bash
+# Build and deploy
+pnpm build
+netlify deploy --prod --dir=dist
+
+# Set TRANSPORT_TYPE=sse in Netlify dashboard
+```
+
+### SSE Endpoints
+When running in SSE mode, the server provides:
+- **SSE Endpoint**: `http://localhost:3000/sse` - MCP communication
+- **Health Check**: `http://localhost:3000/health` - Server status
+- **Server Info**: `http://localhost:3000/` - Server metadata
 
 ## Tools
 
@@ -172,8 +244,14 @@ pnpm build
 # Development with watch mode
 pnpm dev
 
-# Start server
+# Start server (stdio transport)
 pnpm start
+
+# Start with SSE transport
+pnpm start:sse
+
+# Development with SSE transport
+pnpm dev:sse
 
 # Clean build artifacts
 pnpm clean
@@ -221,6 +299,40 @@ The server handles various error conditions gracefully:
    - **Alternative**: The server will automatically create the directory with proper permissions
 4. **File permissions**: Ensure write access to prompts directory
 5. **JSON parsing errors**: Validate prompt file format
+
+### SSE Transport Issues
+
+1. **Port already in use**:
+   ```bash
+   # Find process using port
+   lsof -i :3000
+   # Kill process
+   kill -9 <PID>
+   ```
+
+2. **CORS errors**: The server includes CORS headers by default for cross-origin requests
+
+3. **Connection timeout**: Check firewall settings and ensure the port is accessible
+
+4. **Build errors**: Ensure all dependencies are installed with `pnpm install`
+
+5. **Cloud deployment issues**:
+   - Verify environment variables are set correctly
+   - Check build logs for errors
+   - Ensure `dist/` directory is included in deployment
+
+### Testing SSE Transport
+
+```bash
+# Test health endpoint
+curl http://localhost:3000/health
+
+# Test server info
+curl http://localhost:3000/
+
+# Test SSE connection
+curl -N http://localhost:3000/sse
+```
 
 ### Directory Configuration
 The server creates prompts in the current working directory by default:

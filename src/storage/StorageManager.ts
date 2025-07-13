@@ -5,6 +5,8 @@ import { validateTaskname, validateContent, sanitizeFilename } from '../utils/va
 
 export class StorageManager {
   private promptsDir: string;
+  private cache: Map<string, { prompt: PromptMetadata, timestamp: number }> = new Map();
+  private CACHE_TTL = 5000; // 5 seconds
 
   constructor(promptsDir: string = 'prompts') {
     // If it's a relative path, resolve it relative to the current working directory
@@ -26,9 +28,15 @@ export class StorageManager {
     
     const filePath = path.join(this.promptsDir, filename);
 
+    const cached = this.cache.get(filePath);
+    if (cached && (Date.now() - cached.timestamp < this.CACHE_TTL)) {
+      return cached.prompt;
+    }
+
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const prompt = JSON.parse(content) as PromptMetadata;
+      this.cache.set(filePath, { prompt, timestamp: Date.now() });
       return prompt;
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
@@ -72,6 +80,8 @@ export class StorageManager {
     const filePath = path.join(this.promptsDir, `${sanitizeFilename(taskname)}.json`);
     await fs.writeFile(filePath, JSON.stringify(promptMetadata, null, 2), 'utf-8');
 
+    // Invalidate cache
+    this.cache.delete(filePath);
     return promptMetadata;
   }
 
