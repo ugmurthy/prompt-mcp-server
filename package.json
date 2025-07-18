@@ -1,13 +1,14 @@
 {
   "name": "promptdb-mcp-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "private": false,
 	"description": "A simple MCP Server to manage prompts based on tasknames",
 	"homepage": "https://github.com/ugmurthy/prompt-mcp-server",
   "main": "dist/index.js",
   "files": [
-		"dist"
+		"dist",
+    "_assets"
 	],
   "bin": {
     "promptdb-mcp-server": "dist/index.js"
