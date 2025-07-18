@@ -21,7 +21,7 @@
     "dev:sse": "npm run build && npm run start:sse",
     "clean": "rm -rf dist"
   },
-  "keywords": [],
+  "keywords": ["MCP Server","system prompts"],
  	"author": "U G Murthy <ugmurthy@gmail.com>",
 	"license": "ISC",
 
