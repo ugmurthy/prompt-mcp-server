@@ -1,6 +1,6 @@
 {
   "name": "promptdb-mcp-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "private": false,
 	"description": "A simple MCP Server to manage prompts based on tasknames",
@@ -22,8 +22,8 @@
     "clean": "rm -rf dist"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+ 	"author": "U G Murthy <ugmurthy@gmail.com>",
+	"license": "ISC",
 
   "dependencies": {
     "@modelcontextprotocol/sdk": "latest",
